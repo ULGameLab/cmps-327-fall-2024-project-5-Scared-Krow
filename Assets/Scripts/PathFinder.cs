@@ -24,8 +24,7 @@ public class PathFinder
 {
     List<Node> TODOList = new List<Node>();
     List<Node> DoneList = new List<Node>();
-    Tile goalTile; 
-
+    Tile goalTile;
 
     // This is the constructor
     public PathFinder()
@@ -56,10 +55,19 @@ public class PathFinder
 
             // for each neighboring tile calculate the costs
             // You just need to fill code inside this foreach only
+            double F = 0;
+            double cost;
             foreach (Tile nextTile in current.tile.Adjacents)
             {
-                
+                if(current.tile.indexX != nextTile.indexX && current.tile.indexY != nextTile.indexY)
+                    cost = 14;
+                else
+                    cost = 10;
+                F = cost+HeuristicsDistance(nextTile, goalTile)*10;
+                TODOList.Add(new Node(nextTile, F, current, HeuristicsDistance(nextTile, goalTile)*10));
+
             }
+            
         }
         return new Queue<Tile>(); // Returns an empty Path if no path is found
     }
@@ -90,9 +98,16 @@ public class PathFinder
             // for each neighboring tile calculate the costs
             // You just need to fill code inside this foreach only
             // Just increase the F cost of the enemy tile and the tiles around it by a certain ammount (say 30)
+            double F = 0;
+            double cost;
             foreach (Tile nextTile in current.tile.Adjacents)
             {
-
+                if(current.tile.indexX != nextTile.indexX && current.tile.indexY != nextTile.indexY)
+                    cost = 14;
+                else
+                    cost = 10;
+                F = cost+HeuristicsDistance(nextTile, goalTile)*10;
+                TODOList.Add(new Node(nextTile, F, current, HeuristicsDistance(nextTile, goalTile)*10));
             }
         }
         return new Queue<Tile>(); // Returns an empty Path
